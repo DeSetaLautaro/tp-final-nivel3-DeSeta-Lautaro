@@ -15,7 +15,7 @@
                 boton.style.display = 'block';
                 ColRegistro.style.display = 'none';
             }
-        }
+        }// cambio para chequear
 
         window.onload = ocultarMostrarBoton; // Llama a la función al cargar la página
         window.onresize = ocultarMostrarBoton; // Llama a la función cuando cambia el tamaño de la pantalla
@@ -25,7 +25,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-6">
-                    <h1>Login</h1>
+                    <h1 style="font-family: 'Jersey 10 Charted', sans-serif; font-size:60px">Login</h1>
                     <div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div id="ColumnaRegistro" class="col-12 col-md-6">
-                    <h1>Registro</h1>
+                    <h1 style="font-family: 'Jersey 10 Charted', sans-serif; font-size:60px">Registro</h1>
                     <div class="row g-3">
                         <div class="col-12">
                             <label for="inputEmail4" class="form-label">Email</label>
