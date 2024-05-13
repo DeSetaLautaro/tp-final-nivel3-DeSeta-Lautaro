@@ -47,7 +47,9 @@ namespace KioscoBabio_
             catch (Exception ex)
             {
 
-                throw ex;
+
+                Session.Add("Error", Seguridad.ManejarError(ex));
+                Response.Redirect("Error.aspx");
             }
 
         }
@@ -58,44 +60,52 @@ namespace KioscoBabio_
         {
 
             dgvArticulos.PageIndex = e.NewPageIndex;
+            dgvArticulos.DataSource = Session["ListaDeArticulos"];
+
             dgvArticulos.DataBind();
 
         }
 
         protected void lnkEliminar_Click(object sender, EventArgs e)
         {
-            ArticulosNegocio negocio = new ArticulosNegocio();
 
             try
             {
+                ArticulosNegocio negocio = new ArticulosNegocio();
+                LinkButton lnkEliminar = (LinkButton)sender;
+
+                // Obtener el índice de la fila que contiene el botón
+                GridViewRow row = (GridViewRow)lnkEliminar.NamingContainer;
+                int rowIndex = row.RowIndex;
+
+                // Obtener el ID del artículo utilizando los DataKeys del GridView
+                int id = int.Parse(dgvArticulos.DataKeys[rowIndex].Value.ToString());
+                
+                int pageIndex = dgvArticulos.PageIndex;
+
+
+                negocio.Eliminar(id);
+
+
+
+                dgvArticulos.DataSource = negocio.ListarArticulos();
+                dgvArticulos.DataBind();
+
+
 
             }
             catch (Exception ex)
             {
 
-                throw ex;
+                Session.Add("Error", Seguridad.ManejarError(ex));
+                Response.Redirect("Error.aspx");
             }
 
         }
 
 
 
-        protected void dgvArticulos_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Eliminar")
-            {
-                // Aquí ejecutas el código para eliminar la fila según el comando "Eliminar"
-
-            }
-            else if (e.CommandName == "Modificar")
-
-            {
-                // Aquí ejecutas el código para modificar la fila según el comando "Modificar"
-
-                // Obtiene el ID de la fila seleccionada
-
-            }
-        }
+       
 
         protected void lnkModificar_Click(object sender, EventArgs e)
         {

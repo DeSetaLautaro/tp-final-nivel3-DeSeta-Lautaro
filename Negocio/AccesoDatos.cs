@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,8 +74,12 @@ namespace Negocio
             try
             {
                 conexion.Open();
-                return int.Parse(comando.ExecuteScalar().ToString());
+                if(comando.ExecuteScalar()!= null) 
+                    return int.Parse(comando.ExecuteScalar().ToString());
+                else
+                        return 0;
             }
+           
             catch (Exception ex)
             {
                 throw ex;
@@ -93,6 +98,7 @@ namespace Negocio
             conexion.Close();
         }
 
+        
     }
 
 }

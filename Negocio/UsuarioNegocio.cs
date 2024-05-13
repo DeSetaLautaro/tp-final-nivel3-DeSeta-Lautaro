@@ -1,6 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,18 +46,28 @@ namespace Negocio
             AccesoDatos accesoDatos = new AccesoDatos();
             try
             {
-                accesoDatos.setearConsulta("select Id, admin from USERS where nombre=@User and pass=@Pass");
-                accesoDatos.setearParametro("@User", usuario.NombreUsuario);
+                accesoDatos.setearConsulta("select Id, admin, UrlImagenPerfil, apellido, nombre, email from USERS where email=@email and pass=@Pass");
+                accesoDatos.setearParametro("@email", usuario.Email);
                 accesoDatos.setearParametro("@Pass", usuario.Pass);
+
                 accesoDatos.ejecutarLectura();
 
                 while (accesoDatos.Lector.Read())
                 {
                     usuario.Id = (int)accesoDatos.Lector["Id"];
                     usuario.Admin = (bool)accesoDatos.Lector["admin"];
+                    usuario.ApellidoUsuario = accesoDatos.Lector["apellido"].ToString();
+                    usuario.NombreUsuario = accesoDatos.Lector["nombre"].ToString();
+                    usuario.Email = accesoDatos.Lector["email"].ToString();
+                    object valor = accesoDatos.Lector["urlImagenPerfil"];
+                    if (valor != DBNull.Value && !(string.IsNullOrEmpty((string)valor)))
+                    {
+                        usuario.Imagen = (string)valor;
+                    }
+
                     if (usuario.Admin)
                     {
-                        usuario.TipoDeUsuario = TipoUsuario.Admin;
+                         usuario.TipoDeUsuario = TipoUsuario.Admin;
                     }
                     else
                     {
@@ -72,6 +84,57 @@ namespace Negocio
 
                 throw;
             }
+        }
+
+        public void ModificarDatosPerfil(Usuario usuario)
+        {
+            
+            AccesoDatos accesoDatos = new AccesoDatos();
+
+            try
+            {
+                
+                accesoDatos.setearProcedimiento("ModificarDatosPerfil");
+                accesoDatos.setearParametro("@Id", usuario.Id);
+                accesoDatos.setearParametro("@Email", usuario.Email);
+                accesoDatos.setearParametro("@Nombre", usuario.NombreUsuario);
+                accesoDatos.setearParametro("@Apellido", usuario.ApellidoUsuario);
+                accesoDatos.setearParametro("@UrlImagenPerfil", (object)usuario.Imagen ?? DBNull.Value);
+                accesoDatos.ejecutarAccion();
+                
+                
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally 
+            {
+                accesoDatos.cerrarConexion();
+            }
+
+
+
+
+
+
+        }
+
+        public bool VerificarEmailRepetido(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            datos.setearProcedimiento("ChekearSiExisteEmail");
+            datos.setearParametro("@email",email);
+            if(datos.ejecutarAccionScalar() > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

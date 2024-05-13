@@ -14,7 +14,7 @@
                     <h3 style="margin-top: 50px">Pedinos lo que quieras y te lo llevamos a la puerta de tu casa...</h3>
 
                     <%---Botones de redes--%>
-                    <div class="col d-flex align-items-end justify-content-center" id="BotonesRedes"  >
+                    <div class="col d-flex align-items-end justify-content-center" id="BotonesRedes">
                         
                  
                             <svg class="iconosRedes" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" cssclass="bi bi-instagram" viewBox="0 0 16 16">
@@ -43,8 +43,10 @@
                     <h1>Hacé tu pedido!</h1>
                     <div>
                         <asp:Button CssClass="btn btn-primary" Style="margin-right: 8px" runat="server" ID="btnVerCatalofo" Text="Ver Catalogo" OnClick="btnVerCatalofo_Click" />
-                        <asp:Button CssClass="btn btn-primary" runat="server" Text="Ingresar" />
-
+                        <%if (Negocio.Seguridad.HaySesionActiva((Dominio.Usuario)Session["Usuario"]))
+                            {  %>
+                            <asp:Button CssClass="btn btn-primary" runat="server" Text="Ingresar" />
+                        <%} %>
                     </div>
 
                 </div>

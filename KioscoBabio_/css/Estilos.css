@@ -1,9 +1,10 @@
 ﻿
-@import url('https://fonts.googleapis.com/css2?family=Jersey+10+Charted&family=Jersey+25&family=Rubik+Doodle+Shadow&family=Sail&display=swap');﻿﻿
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10+Charted&family=Jersey+25&family=Rubik+Doodle+Shadow&family=Sail&display=swap');
+
 .navbar {
-    padding: 1rem;
-    height: 130px;
-    background: linear-gradient(to right, rgb(207, 27, 27), rgb(146, 43, 43));
+   padding: 1rem;
+   height: 100px;
+   background: linear-gradient(to right, rgb(207, 27, 27), rgb(146, 43, 43));
 }
 
 .navbar-collapse {
@@ -17,6 +18,22 @@ section {
     align-items: center;
     justify-content: flex-start;
     padding: 20px
+}
+#VerPerfilPantallaGrande{
+    display:none;
+}
+
+#CerrarSesionPantallaGrande
+{
+    display:none;
+}
+
+/* Cambia la tipografía del mensaje de error del RequiredFieldValidator */
+.requiredFieldValidatorErrorMessage {
+    font-family: Arial, sans-serif; 
+    font-size: 10px; 
+    font-weight: normal; 
+    color: red; 
 }
 
 
@@ -48,16 +65,30 @@ section {
 #Registro {
     min-height: 600px;
     text-align: left;
-    background-color: rgb(248, 190, 190);
+    background: rgb(182, 207, 225);
 }
 
 
+#btnLogin {
+    background-color: cornflowerblue; /* Relleno claro */
+    border: 2px solid #0074d9; /* Borde azul brillante */
+    padding: 10px 20px; /* Espacio interno (relleno) */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s; /* Transición suave al pasar el mouse */
+    width: 60px;
+}
+
+#btnLogin:hover {
+    background-color: #0074d9; /* Relleno más intenso al pasar el mouse */
+    color: #ffffff; /* Color de texto en el hover */
+}
 
 
-
-
-
-
+#TituloNavBar {
+    margin-left: 20px; 
+    font-family: 'Jersey 25', sans-serif; 
+    font-size: 80px;
+}
 
 .menu-desplegable {
     position: absolute;
@@ -65,7 +96,7 @@ section {
     top: 25%;
     left: 0;
     width: 100%;
-    height: 50%; /* Aquí puedes ajustar el tamaño según sea necesario */
+    height: 50%; 
     background-color: rgba(0, 0, 0, 0.7); /* Fondo semitransparente */
 }
 
@@ -77,6 +108,48 @@ section {
     transition: margin-top 0.5s ease; /* Transición suave para el ajuste del margen */
 }
 
+.usuario-con-foto {
+    display: flex; /* Para alinear los elementos horizontalmente */
+    width: 170px;
+    align-items: center; /* Para alinear verticalmente los elementos */
+    border: 1px solid transparent; /* Establece un borde transparente por defecto */
+    transition: border-color 0.3s;
+    position:relative;
+    padding: 8px;
+}
+
+
+    .usuario-con-foto:hover {
+        border-color: blue; /* Cambia el color del borde a azul cuando se pasa el mouse sobre el div */
+    }
+
+.menu-desplegable-perfil {
+    display: none; /* Oculta el menú desplegable por defecto */
+    position: absolute; /* Establece posición absoluta para el menú */
+    top: 70%; /* Coloca el menú justo debajo del div */
+    background-color: white; /* Color de fondo del menú */
+    border: 1px solid #ccc; /* Borde del menú */
+    border-radius: 4px; /* Borde redondeado */
+    padding: 15px; /* Espaciado interno del menú */
+   
+    
+}
+
+.usuario-con-foto:hover .menu-desplegable-perfil {
+    display: block; /* Muestra el menú desplegable cuando se pasa el mouse sobre el div */
+}
+
+@media (max-width: 934px)
+{
+    #logo {
+        width: 80px;
+    }
+
+    #TituloNavBar
+    {
+        font-size: 60px;
+    }
+}
 
 /*Responsive*/
 @media (max-width: 767px) {
@@ -84,9 +157,24 @@ section {
         display: none;
     }
 
+    #usuarioConFoto {
+        display: none;
+    }
     #navbarToggler {
         background-color: whitesmoke;
         z-index: 1;
+    }
+    #VerPerfilPantallaGrande
+    {
+        display: block;
+    }
+    #CerrarSesionPantallaGrande
+    {
+        display: block;
+    }
+
+    #TituloNavBar {
+        font-size: 20px;
     }
 
     .iconosRedes {
@@ -101,6 +189,10 @@ section {
 
     #BotonRegistro {
         display: none;
+    }
+
+    #LoginRow {
+        margin-top: 0px !important;
     }
 }
 
@@ -121,6 +213,8 @@ section {
             padding: 0.5em;
             border-radius: 0.7em;
         }
+
+        
 }
 
 /* Estilos para dispositivos móviles */

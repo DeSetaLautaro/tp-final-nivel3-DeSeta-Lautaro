@@ -24,6 +24,15 @@ namespace KioscoBabio_
         protected global::System.Web.UI.WebControls.TextBox FiltroLista;
 
         /// <summary>
+        /// Control btnRestablecer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRestablecer;
+
+        /// <summary>
         /// Control ddlCategoriasLista1.
         /// </summary>
         /// <remarks>

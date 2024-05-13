@@ -15,6 +15,30 @@ namespace KioscoBabio_
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            Response.Cache.SetNoStore();
+
+            try
+            {
+
+                if (Negocio.Seguridad.HaySesionActiva((Usuario)Session["Usuario"]))
+                {
+
+                    Response.Redirect("PaginaPrincipal.aspx");
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Session.Add("Error", Seguridad.ManejarError(ex));
+                Response.Redirect("Error.aspx");
+
+            }
+
+
+
+
 
         }
 
@@ -22,6 +46,7 @@ namespace KioscoBabio_
         protected void BotonRegistro_Click(object sender, EventArgs e)
         {
             Response.Redirect("RegistroMovil.aspx");
+
         }
 
 
@@ -32,66 +57,98 @@ namespace KioscoBabio_
 
         protected void botonIngresar_Click(object sender, EventArgs e)
         {
-            AccesoDatos datos = new AccesoDatos();
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             Usuario usuario = new Usuario();
             try
             {
-                usuario.NombreUsuario = txtNombreUsuarioLogin.Text;
-                usuario.Pass = txtContraseñaLogin.Text;
+                usuario.Email = txtEmailLogin.Text;
+                usuario.Pass = txtPassLogin.Text;
                 int UserId = usuarioNegocio.Loguear(usuario);
                 if (UserId > 0)
                 {
                     Session.Add("Usuario", usuario);
                     Session.Add("UserId", usuario.Id);
-                    Response.Redirect("PaginaPrincipal.aspx");
+                    Response.Redirect("PaginaPrincipal.aspx", false);
+                }
+                else
+                {
+                    ValidatorEmailLogin1.IsValid = false;
+                    txtEmailLogin.CssClass = "form-control is-invalid";
+                    txtPassLogin.CssClass = "form-control is-invalid";
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                Session.Add("Error", Seguridad.ManejarError(ex));
+                Response.Redirect("Error.aspx");
+
             }
 
         }
 
         protected void btnRegistrarse_Click(object sender, EventArgs e)
         {
-
+            
             try
             {
+           
+                Page.Validate("RegistroValidationGroup");
+            if (!Page.IsValid)
+                return;
+             
+
                 Usuario usuario = new Usuario();
                 UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
 
+                usuario.Email = txtEmail.Text;
+
+                if (usuarioNegocio.VerificarEmailRepetido(usuario.Email))
+                {
+                    EmailRepetidoValidator.IsValid = false;
+                    return;
+                }
+
+
+
+
+
+
+
                 usuario.NombreUsuario = txtNombreDeUsuario.Text;
                 usuario.Pass = txtPass.Text;
-                usuario.Email = txtEmail.Text;
                 usuario.ApellidoUsuario = txtApellido.Text;
 
                 if (txtImagen.PostedFile.FileName != "")
                 {
                     string ruta = Server.MapPath("./Images/");
-                    txtImagen.PostedFile.SaveAs(ruta + "perfil-" + usuario.NombreUsuario + ".jpg");
-                    usuario.Imagen = "perfil-" + usuario.NombreUsuario + ".jpg";
+                    txtImagen.PostedFile.SaveAs(ruta + "perfil-" + usuario.NombreUsuario + ".JPG");
+                    usuario.Imagen = "perfil-" + usuario.NombreUsuario + ".JPG";
                 }
 
 
                 int id = usuarioNegocio.InsertarUsuario(usuario);
                 Session.Add("Usuario", usuario);
                 Session.Add("UserId", id);
-                Response.Redirect("PaginaPrincipal.aspx");
+                EmailService emailService = new EmailService();
+                emailService.armarCorreo(usuario.Email, "Login KioscoBabio", "Bienvenido! Gracias por unirte a KioscoBabio. Ya puedes comenzar a pedir.");
+                emailService.enviarEmail();
+                Response.Redirect("PaginaPrincipal.aspx", false);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Session.Add("Error", Seguridad.ManejarError(ex));
+                Response.Redirect("Error.aspx");
             }
 
 
 
         }
+      
+
+
 
     }
 

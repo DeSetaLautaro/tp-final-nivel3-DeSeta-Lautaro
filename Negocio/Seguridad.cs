@@ -29,5 +29,14 @@ namespace Negocio
             else
                 return false;
         }
+
+        public static string ManejarError(Exception ex)
+        {
+            
+            return ex.Message;
+            
+        }
+    
     }
+
 }

@@ -6,7 +6,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
 
-        <div class="row g-3">
+        <div class="row g-3" style="margin-top:10px">
             <div class="col-12 col-md-6">
 
                 <div class="col-12">
@@ -57,11 +57,7 @@
                 <div class="col-md-2">
                 </div>
                 <div class="col-12">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                        </label>
-                    </div>
+                    
                 </div>
                 <div class="col-12">
                     <asp:Button runat="server" ID="btnModificar" OnClick="btnModificar_Click" type="submit" class="btn btn-primary"></asp:Button>

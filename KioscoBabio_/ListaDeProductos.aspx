@@ -8,7 +8,7 @@
        <ContentTemplate>
                    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 
-<div class="container" style="margin-top: 10px">
+<div class="container" style="margin-top: 20px">
 
 
     <div class="row">
@@ -75,8 +75,10 @@
 
 
         <div class="row" id="GridView">
+            <asp:UpdatePanel runat="server" ID="UpdPanelGridView">
+                <ContentTemplate>
 
-            <asp:GridView runat="server" ID="dgvArticulos" AutoGenerateColumns="false" CssClass="table" DataKeyNames="Id" OnPageIndexChanging="dgvArticulos_PageIndexChanging" AllowPaging="true" PageSize="6">
+            <asp:GridView runat="server" ID="dgvArticulos" AutoGenerateColumns="false" CssClass="table" DataKeyNames="Id" OnPageIndexChanging="dgvArticulos_PageIndexChanging" AllowPaging="true" PageSize="4">
                 <Columns>
 
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
@@ -97,6 +99,8 @@
 
             </asp:GridView>
 
+                </ContentTemplate>
+            </asp:UpdatePanel>
             <asp:Button runat="server" Text="Agregar Articulo" ID="btnAgregarArticulo" OnClick="btnAgregarArticulo_Click" />
 
         </div>

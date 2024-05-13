@@ -24,56 +24,102 @@
     <script type="text/javascript">
         document.getElementById("btnSalir").addEventListener("click", function (event) {
             event.preventDefault();
+
+        });
     </script>
+
+
     <form id="form1" runat="server">
         <div>
             <%--Barra de navegacion--%>
-            <nav class="navbar navbar-expand-md navbar-light" style="background: linear-gradient(to right, rgb(207, 27, 27), rgb(146, 43, 43));">
+            <nav class="navbar navbar-expand-md navbar-light">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarToggler">
                         <a class="navbar-brand d-flex justify-content-center align-items-center" href="#">
-                            <img id="logo" class="rounded-circle" src="Images/Logo.Herreria.png" width="120" alt="Logo Herreria" />
-                            <h1 style="margin-left: 20px; font-family: 'Jersey 25', sans-serif; font-size:80px">Kiosco Babio</h1>
+                            <img id="logo" class="rounded-circle" src="Images/Logo.Herreria.png" width="120" alt="Logo Herreria" style="margin-top: 20px" />
+                            <%--LOGO--%>
+                            <h1 id="TituloNavBar">Kiosco Babio</h1>
+                            <%-- Titulo de "KIOSCO BABIO"--%>
                         </a>
-                        <ul class="navbar-nav d-flex justify-content-center align-items-center">
+                        <%--ITEMS--%>
+                        <ul class="navbar-nav d-flex justify-content-between align-items-center" style="margin-right: 10px">
+
                             <li class="nav-item ml-auto">
-                                <a class="nav-link active" aria-current="page" href="Catalogo.aspx">Catalogo</a>
+                                <a class="nav-link active" aria-current="page" href="Catalogo.aspx">Catálogo</a>
                             </li>
+                            <li class="nav-item ml-auto">
+                                <a class="nav-link active" aria-current="page" href="PaginaPrincipal.aspx">Página Principal</a>
+                            </li>
+                            <%if (Negocio.Seguridad.HaySesionActiva((Dominio.Usuario)Session["Usuario"]))
+                                {  %> <%-- Si hay sesión activa se muestra el item de favoritos --%>
                             <li class="nav-item ml-auto">
                                 <a class="nav-link active" aria-current="page" href="Favoritos.aspx">Favoritos</a>
                             </li>
+
+                            <%} %>
                             <%if (Session["Usuario"] != null && Negocio.Seguridad.EsAdmin((Dominio.Usuario)Session["Usuario"]))
-                                { %>
+                                { %> <%--Si es admin se muestra el item Lista de prodcutos (donde se puede agregar, modificar produtos, etc)--%>
 
                             <li class="nav-item ml-auto">
                                 <a class="nav-link active" aria-current="page" href="ListaDeProductos.aspx">ListadoUser</a>
                             </li>
                             <% }%>
+
+                            <%if (Negocio.Seguridad.HaySesionActiva((Dominio.Usuario)Session["Usuario"]))
+                                {  %> <%--Esto SOLO se mostrará cuando la NavBar colapse  --%>
+                            <li class="nav-item ml-auto">
+                                <a id="VerPerfilPantallaGrande" class="nav-link active" aria-current="page" href="PerfilUsuario.aspx">Ver Perfil</a>
+                            </li>
+                            <li class="nav-item ml-auto">
+                                <asp:Button runat="server" ID="CerrarSesionPantallaGrande" class="nav-link active" aria-current="page" Text="Salir" OnClick="btnSalir_Click"></asp:Button>
+                            </li>
+                            <%} %>
+                            <%--------------------------------------------------------------%>
+
                             <%if (!(Negocio.Seguridad.HaySesionActiva((Dominio.Usuario)Session["Usuario"])))
                                 {   %>
                             <li class="nav-item ml-auto">
-                                <asp:Button runat="server" Style="margin: 3px" class="btn btn-primary" aria-disabled="true" Text="Login"></asp:Button>
-                            </li>
-                            <li class="nav-item ml-auto">
-                                <asp:Button runat="server" Style="margin: 3px" class="btn btn-primary" aria-disabled="false" Text="Registrarse"></asp:Button>
-                            </li>
-                            <%}
-                                else
-                                {  %>
-                            <li class="nav-item ml-auto">
-                                <asp:Button runat="server" ID="btnSalir" Style="margin: 3px" class="btn btn-primary" aria-disabled="true" Text="Salir" OnClick="btnSalir_Click" UseSubmitBehavior="false"></asp:Button>
-                                <asp:Image runat="server" class="rounded-circle" Width="60" ID="FotoPerfilMenu" ImageUrl="Images/PerfilSinFoto.JPEG" />
+                                <asp:Button ID="btnLogin" runat="server" Style="margin: 3px" OnClick="btnLogin_Click" class="btn btn-primary" aria-disabled="true" Text="Iniciar Sesión"></asp:Button>
                             </li>
 
-                            <%} %>
+                            <%}
+                                else
+                                { %> <%--En pantallas grandes se mostrara este boton (NOMBRE Y FOTO) desaparecerá cuando la NavBar colapse--%>
+
+
+                            <li class="nav-item" style="margin-left: 15px; margin-right:10px">
+                                <asp:LinkButton CssClass="usuario-con-foto" runat="server" ID="usuarioConFoto" OnClick="usuarioConFoto_Click_Click">
+                                    <div style="display: flex; align-items: center;" >
+
+                                        <asp:Label runat="server" ID="NombreDeUsuario" Style="margin-right: 6px; max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></asp:Label>
+                                        <asp:Image runat="server" class="rounded-circle" Width="40" ID="FotoPerfilMenu" ImageUrl="/Images/person-circle.svg" />
+
+                                        <svg xmlns="http://www.w3.org/2000/svg"  width="25" height="25" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                                        </svg>
+
+                                    </div>
+
+                                    <div class="menu-desplegable-perfil" id="MenuDesplegablePerfil" runat="server">
+                                        <!-- Contenido del menú desplegable -->
+                                        <a class="row" href="PerfilUsuario.aspx">Ver Perfil</a>
+                                        <asp:LinkButton runat="server" class="row" OnClick="btnSalir_Click">Salir</asp:LinkButton>
+                                    </div>
+                                </asp:LinkButton>
+                            </li>
+                            <%}
+                            %>
                         </ul>
 
                     </div>
+
+
                 </div>
             </nav>
+
 
 
 
@@ -85,5 +131,6 @@
     <%--Bootstrap Js--%>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
 </body>
 </html>

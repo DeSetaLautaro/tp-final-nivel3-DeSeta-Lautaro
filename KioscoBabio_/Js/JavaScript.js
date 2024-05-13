@@ -92,3 +92,6 @@ function ajustarMargenGridView() {
         gridView.style.marginTop = "0";
     }
 }
+
+
+

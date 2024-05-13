@@ -15,22 +15,49 @@ namespace KioscoBabio_
     {
 
         /// <summary>
-        /// Control txtNombreUsuarioLogin.
+        /// Control txtEmailLogin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreUsuarioLogin;
+        protected global::System.Web.UI.WebControls.TextBox txtEmailLogin;
 
         /// <summary>
-        /// Control txtContraseñaLogin.
+        /// Control ValidatorEmailLogin.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtContraseñaLogin;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidatorEmailLogin;
+
+        /// <summary>
+        /// Control ValidatorEmailLogin1.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator ValidatorEmailLogin1;
+
+        /// <summary>
+        /// Control txtPassLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPassLogin;
+
+        /// <summary>
+        /// Control ValidatorPassLogin.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator ValidatorPassLogin;
 
         /// <summary>
         /// Control botonIngresar.
@@ -58,6 +85,24 @@ namespace KioscoBabio_
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
+
+        /// <summary>
+        /// Control EmailValidatorRegistro.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator EmailValidatorRegistro;
+
+        /// <summary>
+        /// Control EmailRepetidoValidator.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator EmailRepetidoValidator;
 
         /// <summary>
         /// Control txtPass.
